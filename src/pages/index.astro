@@ -1,0 +1,361 @@
+---
+import CtaBanner from '../components/CtaBanner.astro';
+import FaqList from '../components/FaqList.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import {
+  articles,
+  deliverySteps,
+  faqs,
+  industries,
+  modules,
+  pillars,
+  site,
+  stats,
+  trustMarks,
+  solutions
+} from '../data/site';
+
+const formatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric'
+});
+
+const controlSignals = [
+  ['Payment routing', '14 live policies'],
+  ['Treasury view', '8 entities synced'],
+  ['Exception queues', '3 owner groups'],
+  ['Audit coverage', '100% action history']
+];
+
+const operatingMoments = [
+  {
+    title: 'Move faster without routing chaos',
+    description: 'Change commercial logic and fallback rules from a governed control layer instead of waiting on release cycles.',
+    chips: ['Policy updates', 'Provider failover', 'Margin controls']
+  },
+  {
+    title: 'Keep finance close to the operational truth',
+    description: 'Cash positions, settlement timing, and exception handling stay tied to the same operating events.',
+    chips: ['Entity views', 'Funding approvals', 'Variance flags']
+  },
+  {
+    title: 'Give product and compliance the same source of truth',
+    description: 'Launches feel safer when onboarding, approvals, and reporting work from one shared model.',
+    chips: ['Shared states', 'Access controls', 'Review trails']
+  }
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: site.legalName,
+    url: site.url,
+    email: site.email,
+    description: site.description
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.name,
+    url: site.url,
+    description: site.description
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer
+      }
+    }))
+  }
+];
+---
+
+<MainLayout title="Universal fintech operating layer" description={site.description} path="/" schema={schema}>
+  <section class="shell section-space pb-12 pt-10 sm:pt-14 lg:pt-16">
+    <div class="grid gap-8 xl:grid-cols-[1.06fr_0.94fr] xl:items-end">
+      <div class="space-y-8 fade-rise">
+        <span class="eyebrow">Universal finance infrastructure</span>
+        <div class="space-y-5">
+          <h1 class="page-title">One operating layer for payments, treasury, reconciliation, and trust.</h1>
+          <p class="page-copy">
+            Finvera helps finance, operations, and product teams manage money movement, cash visibility, and audit-ready workflows without fragmented tooling.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a href={site.primaryCta.href} class="button-primary w-full sm:w-auto">{site.primaryCta.label}</a>
+          <a href={site.secondaryCta.href} class="button-secondary w-full sm:w-auto">{site.secondaryCta.label}</a>
+        </div>
+
+        <div class="grid gap-3 lg:grid-cols-3">
+          {stats.map((item, index) => (
+            <article class="content-card fade-rise" data-delay={String(index + 1)}>
+              <p class="metric-value">{item.value}</p>
+              <p class="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">{item.label}</p>
+              <p class="mt-3 text-sm leading-7 text-slate-300">{item.note}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div class="floating-card fade-rise" data-delay="2">
+        <div class="hero-frame mesh-card h-full">
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/8 pb-5">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Live control room</p>
+              <h2 class="mt-2 font-display text-3xl text-white sm:text-4xl">Where finance and ops finally share the same screen</h2>
+            </div>
+            <span class="chip border-cyan-300/20 bg-cyan-300/10 text-cyan-100">Audit-ready</span>
+          </div>
+
+          <div class="mt-6 grid gap-3 sm:grid-cols-2">
+            {controlSignals.map(([label, value]) => (
+              <div class="soft-card">
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{label}</p>
+                <p class="mt-3 font-display text-2xl text-white">{value}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-6 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+            <div class="soft-card">
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Modules in motion</p>
+              <div class="mt-4 grid gap-3 text-sm text-slate-200">
+                {modules.slice(0, 4).map((module) => (
+                  <div class="flex items-start justify-between gap-4 rounded-[18px] border border-white/8 bg-white/4 px-4 py-3">
+                    <span>{module.title}</span>
+                    <span class="text-cyan-100">Live</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div class="soft-card">
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">What changes</p>
+              <p class="mt-4 text-sm leading-7 text-slate-200">
+                Teams stop jumping between provider dashboards, spreadsheets, and internal docs just to understand one money movement.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="chip">Shared telemetry</span>
+                <span class="chip">Clear owners</span>
+                <span class="chip">Faster decisions</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell pb-8">
+    <div class="panel flex flex-col gap-4 rounded-[28px] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Designed for teams scaling across multiple rails, entities, and operating owners</p>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-3 text-base text-slate-100">
+        {trustMarks.map((mark) => (
+          <span class="font-display text-lg">{mark}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="platform" class="shell section-space">
+    <div class="grid gap-6 xl:grid-cols-[1.02fr_0.98fr] xl:items-start">
+      <article class="hero-frame surface-grid">
+        <SectionHeading
+          eyebrow="Platform"
+          title="Built around the full finance operating rhythm"
+          description="Finvera is strongest when the whole system moves together: routing logic, cash visibility, reconciliation, and controls all working from one operating model."
+        />
+        <div class="mt-8 grid gap-4 md:grid-cols-2">
+          {operatingMoments.map((moment) => (
+            <div class="soft-card sm:h-full">
+              <h3 class="font-display text-[1.55rem] text-white sm:text-2xl">{moment.title}</h3>
+              <p class="mt-3 text-sm leading-7 text-slate-300">{moment.description}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {moment.chips.map((chip) => (
+                  <span class="chip">{chip}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </article>
+
+      <div class="grid gap-6">
+        {pillars.map((pillar, index) => (
+          <article class="content-card fade-rise" data-delay={String(index)}>
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div class="max-w-2xl">
+                <h3 class="font-display text-[1.8rem] text-white sm:text-3xl">{pillar.title}</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-300">{pillar.description}</p>
+              </div>
+              <span class="chip">0{index + 1}</span>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-2">
+              {pillar.bullets.map((bullet) => (
+                <span class="chip">{bullet}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="solutions" class="shell section-space pt-0">
+    <SectionHeading
+      eyebrow="Solutions"
+      title="Sharper entry points for high-intent evaluation"
+      description="Instead of burying every use case inside one long homepage, Finvera opens into focused solution pages that can rank, convert, and expand cleanly over time."
+    />
+
+    <div class="mt-10 grid gap-6 xl:grid-cols-2 2xl:grid-cols-3">
+      {solutions.map((solution, index) => (
+        <article
+          class="content-card flex h-full flex-col fade-rise last:xl:col-span-2 last:xl:max-w-[52rem] last:xl:justify-self-center last:2xl:col-span-1 last:2xl:max-w-none last:2xl:justify-self-auto"
+          data-delay={String(index)}
+        >
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="font-display text-2xl text-white sm:text-3xl">{solution.title}</h3>
+            <span class="chip">{solution.outcomes[0]?.value}</span>
+          </div>
+          <p class="mt-4 text-sm leading-7 text-slate-300">{solution.summary}</p>
+          <div class="mt-6 grid gap-3 text-sm text-slate-200">
+            {solution.capabilities.slice(0, 3).map((capability) => (
+              <div class="soft-card">{capability}</div>
+            ))}
+          </div>
+          <a href={`/solutions/${solution.slug}`} class="mt-6 button-secondary w-full sm:w-auto">View solution</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="industries" class="shell section-space pt-0">
+    <SectionHeading
+      eyebrow="Industries"
+      title="The same platform story, framed for different operating realities"
+      description="Each industry page tightens the message around the workflows, blind spots, and trust needs of a specific buyer group."
+    />
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2 2xl:grid-cols-4">
+      {industries.map((industry, index) => (
+        <article class="content-card flex h-full flex-col fade-rise" data-delay={String(index % 4)}>
+          <h3 class="font-display text-2xl text-white">{industry.title}</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-300">{industry.summary}</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            {industry.priorities.slice(0, 2).map((priority) => (
+              <span class="chip">{priority}</span>
+            ))}
+          </div>
+          <a href={`/industries/${industry.slug}`} class="mt-6 button-secondary w-full sm:w-auto">View industry</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="shell section-space pt-0">
+    <div class="grid gap-6 xl:grid-cols-[0.96fr_1.04fr]">
+      <article class="hero-frame surface-grid">
+        <SectionHeading
+          eyebrow="Trust and governance"
+          title="A real trust story needs its own surface area"
+          description="Security is treated like a first-class page because fintech buyers expect more than a short footer paragraph when controls matter."
+        />
+        <div class="mt-8 grid gap-3 sm:grid-cols-2">
+          {['Role-based access', 'Immutable event history', 'Regional control layers'].map((item) => (
+            <div class="soft-card text-sm leading-7 text-slate-200">{item}</div>
+          ))}
+        </div>
+        <a href="/security" class="mt-8 button-secondary w-full sm:w-auto">Review security overview</a>
+      </article>
+
+      <article class="content-card">
+        <SectionHeading
+          eyebrow="Implementation"
+          title="A rollout story that feels credible"
+          description="The site explains how Finvera lands inside a business, which makes the product feel more tangible and less abstract."
+        />
+        <div class="mt-8 grid gap-4 xl:grid-cols-2">
+          {deliverySteps.map((step, index) => (
+            <div class="soft-card h-full">
+              <div class="flex items-start gap-4">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cyan-300/20 bg-cyan-300/10 font-display text-base text-cyan-100">
+                  {index + 1}
+                </span>
+                <div>
+                  <h3 class="font-display text-2xl text-white">{step.title}</h3>
+                  <p class="mt-3 text-sm leading-7 text-slate-300">{step.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="shell section-space pt-0">
+    <SectionHeading
+      eyebrow="Insights"
+      title="Content that can carry the brand beyond the launch week"
+      description="The insight hub is already built into the structure, so long-tail SEO and educational content can scale naturally from the MVP."
+    />
+
+    <div class="mt-10 grid gap-6 xl:grid-cols-[1.04fr_0.96fr] xl:items-stretch">
+      <article class="hero-frame surface-grid h-full">
+        <div class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+          <span>{articles[0].category}</span>
+          <span class="h-1 w-1 rounded-full bg-slate-500"></span>
+          <span>{formatter.format(new Date(articles[0].publishedAt))}</span>
+        </div>
+        <h3 class="mt-5 font-display text-3xl text-white sm:text-4xl">{articles[0].title}</h3>
+        <p class="mt-4 text-base leading-8 text-slate-300">{articles[0].summary}</p>
+        <a href={`/blog/${articles[0].slug}`} class="mt-8 button-secondary w-full sm:w-auto">Read article</a>
+      </article>
+
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-1">
+        {articles.slice(1).map((article) => (
+          <article class="content-card flex h-full flex-col">
+            <div class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+              <span>{article.category}</span>
+              <span class="h-1 w-1 rounded-full bg-slate-500"></span>
+              <span>{formatter.format(new Date(article.publishedAt))}</span>
+            </div>
+            <h3 class="mt-5 font-display text-2xl text-white sm:text-[1.85rem]">{article.title}</h3>
+            <p class="mt-4 text-sm leading-7 text-slate-300">{article.excerpt}</p>
+            <a href={`/blog/${article.slug}`} class="mt-6 button-secondary w-full sm:w-auto">Read article</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="shell section-space pt-0">
+    <SectionHeading
+      eyebrow="FAQ"
+      title="Questions buyers are going to ask anyway"
+      description="Keeping the answers visible helps both conversion and crawlability, especially in a category where trust and operating clarity matter."
+    />
+
+    <div class="mt-10">
+      <FaqList items={faqs} />
+    </div>
+  </section>
+
+  <CtaBanner
+    title="Need a fintech landing that looks sharper and scales like a real site?"
+    description="Finvera now has the visual system, route map, and mobile-first rhythm to grow from a strong launch page into a serious demand engine."
+    primaryHref="/contact"
+    primaryLabel="Book a walkthrough"
+    secondaryHref="/blog"
+    secondaryLabel="Review the insight hub"
+  />
+</MainLayout>

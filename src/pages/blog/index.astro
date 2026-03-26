@@ -1,0 +1,78 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { absoluteUrl, articles } from '../../data/site';
+
+const formatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric'
+});
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Finvera insights',
+  blogPost: articles.map((article) => ({
+    '@type': 'BlogPosting',
+    headline: article.title,
+    url: absoluteUrl(`/blog/${article.slug}`),
+    datePublished: article.publishedAt,
+    description: article.excerpt
+  }))
+};
+---
+
+<MainLayout
+  title="Insights"
+  description="A fintech content hub covering operations, treasury, growth, and control-first product thinking."
+  path="/blog"
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Insights"
+    title="Content designed to support both credibility and search reach"
+    description="The insight hub is part of the product story, not an afterthought. That makes it easier to expand the brand without rethinking the whole site map later."
+    highlights={['Operations', 'Treasury', 'Growth']}
+  >
+    <a slot="actions" href="/contact" class="button-primary w-full sm:w-auto">Talk about the site</a>
+    <a slot="actions" href="/solutions" class="button-secondary w-full sm:w-auto">Explore solutions</a>
+  </PageHero>
+
+  <section class="shell section-space">
+    <SectionHeading
+      eyebrow="Articles"
+      title="A compact editorial system with room to grow"
+      description="The layout keeps the first post prominent, then lets the rest of the hub flow into clean, readable cards that do not collapse on smaller screens."
+    />
+
+    <div class="mt-10 grid gap-6 xl:grid-cols-[1.04fr_0.96fr] xl:items-stretch">
+      <article class="hero-frame surface-grid h-full">
+        <div class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+          <span>{articles[0].category}</span>
+          <span class="h-1 w-1 rounded-full bg-slate-500"></span>
+          <span>{formatter.format(new Date(articles[0].publishedAt))}</span>
+        </div>
+        <h2 class="mt-5 font-display text-3xl text-white sm:text-4xl">{articles[0].title}</h2>
+        <p class="mt-4 text-base leading-8 text-slate-300">{articles[0].summary}</p>
+        <a href={`/blog/${articles[0].slug}`} class="mt-8 button-secondary w-full sm:w-auto">Read article</a>
+      </article>
+
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-1">
+        {articles.slice(1).map((article) => (
+          <article class="content-card flex h-full flex-col">
+            <div class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+              <span>{article.category}</span>
+              <span class="h-1 w-1 rounded-full bg-slate-500"></span>
+              <span>{formatter.format(new Date(article.publishedAt))}</span>
+            </div>
+            <h2 class="mt-5 font-display text-2xl text-white sm:text-[1.85rem]">{article.title}</h2>
+            <p class="mt-4 text-sm leading-7 text-slate-300">{article.excerpt}</p>
+            <a href={`/blog/${article.slug}`} class="mt-6 button-secondary w-full sm:w-auto">Read article</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</MainLayout>

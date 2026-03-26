@@ -1,0 +1,81 @@
+---
+import CtaBanner from '../../components/CtaBanner.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { absoluteUrl, industries } from '../../data/site';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Finvera industries',
+  itemListElement: industries.map((industry, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: absoluteUrl(`/industries/${industry.slug}`),
+    name: industry.title
+  }))
+};
+---
+
+<MainLayout
+  title="Industries"
+  description="Industry pages for SaaS platforms, marketplaces, digital banks, and retail operators."
+  path="/industries"
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Industries"
+    title="One platform story, shaped around different operating pressure"
+    description="Industry pages let the site speak the language of specific teams without fragmenting the product narrative into disconnected microsites."
+    highlights={[
+      'SaaS platforms',
+      'Marketplaces',
+      'Digital banks',
+      'Retail operators'
+    ]}
+  >
+    <a slot="actions" href="/contact" class="button-primary w-full sm:w-auto">Book a walkthrough</a>
+    <a slot="actions" href="/solutions" class="button-secondary w-full sm:w-auto">Explore solutions</a>
+  </PageHero>
+
+  <section class="shell section-space">
+    <SectionHeading
+      eyebrow="Coverage"
+      title="Vertical pages with enough room to feel specific"
+      description="Each card is designed to hold segment language, common workflows, and proof points without collapsing into a generic template."
+    />
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      {industries.map((industry) => (
+        <article class="hero-frame h-full">
+          <h2 class="font-display text-3xl text-white lg:text-4xl">{industry.title}</h2>
+          <p class="mt-4 text-base leading-8 text-slate-300">{industry.description}</p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            {industry.priorities.map((priority) => (
+              <span class="chip">{priority}</span>
+            ))}
+          </div>
+          <div class="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {industry.outcomes.map((outcome) => (
+              <div class="soft-card">
+                <p class="font-display text-2xl text-white">{outcome.value}</p>
+                <p class="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">{outcome.label}</p>
+              </div>
+            ))}
+          </div>
+          <a href={`/industries/${industry.slug}`} class="mt-8 button-secondary w-full sm:w-auto">View industry page</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <CtaBanner
+    title="Need stronger vertical messaging for the best-fit segments?"
+    description="These pages are ready for segment proof, customer language, and case-study expansion without changing the overall design system."
+    primaryHref="/contact"
+    primaryLabel="Plan the vertical rollout"
+    secondaryHref="/blog"
+    secondaryLabel="See the insight hub"
+  />
+</MainLayout>

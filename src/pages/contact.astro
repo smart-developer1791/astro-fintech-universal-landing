@@ -1,0 +1,88 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { site } from '../data/site';
+
+const contactRoutes = [
+  ['Sales and product', 'For walkthroughs, roadmap discussion, and platform fit.', site.email],
+  ['Partnerships', 'For ecosystem collaboration, bank relationships, and distribution ideas.', 'partners@finvera.example'],
+  ['Security and trust', 'For governance questions, trust reviews, and control discussions.', 'security@finvera.example']
+];
+
+const prepList = [
+  'What part of the finance stack feels most fragmented right now.',
+  'Which teams need shared visibility: finance, product, operations, or compliance.',
+  'Whether you are launching a new flow or replacing a brittle internal setup.',
+  'Any regions, entities, or provider complexity that matter early in the discussion.'
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Finvera contact',
+  description: 'Contact the Finvera team for product walkthroughs, partnerships, and security questions.'
+};
+---
+
+<MainLayout
+  title="Contact"
+  description="Contact the Finvera team for product walkthroughs, partnerships, and security questions."
+  path="/contact"
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Clear routes, clean next steps, no fake form theater"
+    description="The contact page stays honest: direct email paths, a lightweight prep list, and enough context to make the first conversation useful."
+    highlights={[
+      'Product walkthroughs',
+      'Partnership conversations',
+      'Security and governance questions'
+    ]}
+  >
+    <a slot="actions" href={`mailto:${site.email}`} class="button-primary w-full sm:w-auto">Email the team</a>
+    <a slot="actions" href="/solutions" class="button-secondary w-full sm:w-auto">Explore solutions</a>
+  </PageHero>
+
+  <section class="shell section-space">
+    <div class="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+      <article class="content-card">
+        <SectionHeading
+          eyebrow="Routes"
+          title="Who should reach out, and where"
+          description="The cards below can later evolve into CRM-backed flows, but the MVP keeps the experience simple and credible."
+        />
+        <div class="mt-8 grid gap-4">
+          {contactRoutes.map(([title, description, email]) => (
+            <div class="soft-card">
+              <h2 class="font-display text-2xl text-white">{title}</h2>
+              <p class="mt-3 text-sm leading-7 text-slate-300">{description}</p>
+              <a href={`mailto:${email}`} class="mt-4 inline-flex text-sm font-semibold text-cyan-100 hover:text-white">
+                {email}
+              </a>
+            </div>
+          ))}
+        </div>
+      </article>
+
+      <article class="hero-frame surface-grid">
+        <SectionHeading
+          eyebrow="Before the first call"
+          title="Helpful context to send ahead"
+          description="A short checklist makes the contact page useful even before a backend form exists, and it keeps the tone consultative instead of generic."
+        />
+        <div class="mt-8 grid gap-4 sm:grid-cols-2">
+          {prepList.map((item, index) => (
+            <div class="soft-card h-full">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/20 bg-cyan-300/10 font-display text-base text-cyan-100">
+                0{index + 1}
+              </span>
+              <p class="mt-4 text-sm leading-7 text-slate-200">{item}</p>
+            </div>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+</MainLayout>

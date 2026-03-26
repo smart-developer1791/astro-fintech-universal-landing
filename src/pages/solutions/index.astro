@@ -1,0 +1,100 @@
+---
+import CtaBanner from '../../components/CtaBanner.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { absoluteUrl, industries, solutions } from '../../data/site';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Finvera solutions',
+  itemListElement: solutions.map((solution, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: absoluteUrl(`/solutions/${solution.slug}`),
+    name: solution.title
+  }))
+};
+---
+
+<MainLayout
+  title="Fintech solutions"
+  description="Solution pages for payment orchestration, treasury automation, and reconciliation control."
+  path="/solutions"
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Solutions"
+    title="Focused entry points for the operating motions that matter most"
+    description="Each route turns a broad platform story into a sharper commercial conversation, which is better for both search visibility and buyer clarity."
+    highlights={[
+      'Payment routing and resilience',
+      'Treasury visibility and approvals',
+      'Continuous reconciliation and evidence'
+    ]}
+  >
+    <a slot="actions" href="/contact" class="button-primary w-full sm:w-auto">Book a walkthrough</a>
+    <a slot="actions" href="/security" class="button-secondary w-full sm:w-auto">View security overview</a>
+  </PageHero>
+
+  <section class="shell section-space">
+    <SectionHeading
+      eyebrow="Catalog"
+      title="Commercial stories that can grow without turning repetitive"
+      description="The layout keeps each card roomy on mobile and balanced on larger screens, while still leaving space for proof, capability detail, and internal linking."
+    />
+
+    <div class="mt-10 grid gap-6 xl:grid-cols-2">
+      {solutions.map((solution) => {
+        const relatedIndustries = industries.filter((industry) =>
+          solution.relatedIndustries.includes(industry.slug)
+        );
+
+        return (
+          <article class="hero-frame h-full last:xl:col-span-2 last:xl:max-w-[52rem] last:xl:justify-self-center">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div class="max-w-2xl">
+                <h2 class="font-display text-3xl text-white lg:text-4xl">{solution.title}</h2>
+                <p class="mt-4 text-base leading-8 text-slate-300">{solution.description}</p>
+              </div>
+              <span class="chip">{solution.outcomes[0]?.value}</span>
+            </div>
+
+            <div class="mt-8 grid gap-3 sm:grid-cols-2">
+              {solution.capabilities.map((item) => (
+                <div class="soft-card text-sm leading-7 text-slate-200">{item}</div>
+              ))}
+            </div>
+
+            <div class="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {solution.outcomes.map((outcome) => (
+                <div class="soft-card">
+                  <p class="font-display text-2xl text-white">{outcome.value}</p>
+                  <p class="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">{outcome.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div class="mt-8 flex flex-wrap gap-2">
+              {relatedIndustries.map((industry) => (
+                <span class="chip">{industry.title}</span>
+              ))}
+            </div>
+
+            <a href={`/solutions/${solution.slug}`} class="mt-8 button-secondary w-full sm:w-auto">View solution page</a>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <CtaBanner
+    title="Want deeper conversion pages for your core product journeys?"
+    description="These routes are already structured to support proof, comparisons, vertical variants, and future content without a redesign."
+    primaryHref="/contact"
+    primaryLabel="Plan the next page"
+    secondaryHref="/industries"
+    secondaryLabel="Review industry pages"
+  />
+</MainLayout>

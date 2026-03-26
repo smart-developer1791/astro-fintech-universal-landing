@@ -1,0 +1,118 @@
+---
+import CtaBanner from '../components/CtaBanner.astro';
+import FaqList from '../components/FaqList.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { securityFaqs, securityFrameworks, securityPractices } from '../data/site';
+
+const reviewSteps = [
+  ['Access is scoped', 'Teams get only the privileges needed for their entity, workflow, and responsibility.'],
+  ['Actions are approved', 'Operational overrides and control changes move through explicit review paths.'],
+  ['Events are captured', 'Money movement and configuration changes stay tied to identity, time, and context.'],
+  ['Evidence is reviewable', 'Finance and compliance can retrieve a clear activity story without rebuilding it manually.']
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Finvera security overview',
+  description: 'Control-first overview covering access, auditability, resilience, and operating governance.'
+};
+---
+
+<MainLayout
+  title="Security overview"
+  description="Control-first overview covering access, auditability, resilience, and operating governance."
+  path="/security"
+  schema={schema}
+>
+  <PageHero
+    eyebrow="Security"
+    title="Trust, controls, and governance deserve more than a footnote"
+    description="The security route gives Finvera a proper place to explain how permissions, review flows, and audit history work together inside the operating model."
+    highlights={[
+      'Role-based access',
+      'Immutable event trails',
+      'Regional control layers',
+      'Operational resilience'
+    ]}
+  >
+    <a slot="actions" href="/contact" class="button-primary w-full sm:w-auto">Talk to the team</a>
+    <a slot="actions" href="/solutions" class="button-secondary w-full sm:w-auto">Explore solutions</a>
+  </PageHero>
+
+  <section class="shell section-space">
+    <div class="grid gap-6 xl:grid-cols-[1.02fr_0.98fr]">
+      <article class="hero-frame surface-grid">
+        <SectionHeading
+          eyebrow="Operating posture"
+          title="Controls sit close to the workflows they govern"
+          description="The trust story feels stronger when it is framed as real operating design, not just a list of claims."
+        />
+        <div class="mt-8 grid gap-3">
+          {securityFrameworks.map((item) => (
+            <div class="soft-card text-sm leading-7 text-slate-200">{item}</div>
+          ))}
+        </div>
+      </article>
+
+      <article class="content-card">
+        <SectionHeading
+          eyebrow="Practices"
+          title="A trust surface broken into practical pillars"
+          description="These are the themes buyers actually look for when they evaluate a platform that touches money movement and governance."
+        />
+        <div class="mt-8 grid gap-4 sm:grid-cols-2">
+          {securityPractices.map((practice) => (
+            <div class="soft-card h-full">
+              <h2 class="font-display text-2xl text-white">{practice.title}</h2>
+              <p class="mt-3 text-sm leading-7 text-slate-300">{practice.description}</p>
+            </div>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="shell section-space pt-0">
+    <SectionHeading
+      eyebrow="Review flow"
+      title="A trust page should show how review actually happens"
+      description="This sequence makes the platform feel more tangible, especially for buyers who need to picture control ownership before they can say yes."
+    />
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2 2xl:grid-cols-4">
+      {reviewSteps.map(([title, description], index) => (
+        <article class="content-card h-full">
+          <span class="flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/20 bg-cyan-300/10 font-display text-base text-cyan-100">
+            0{index + 1}
+          </span>
+          <h2 class="mt-5 font-display text-2xl text-white">{title}</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-300">{description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="shell section-space pt-0">
+    <SectionHeading
+      eyebrow="Security FAQ"
+      title="Questions a trust reviewer is likely to ask next"
+      description="The answers below help both human evaluators and search engines understand how the control model works."
+    />
+
+    <div class="mt-10">
+      <FaqList items={securityFaqs} />
+    </div>
+  </section>
+
+  <CtaBanner
+    title="Need this route to become a fuller trust center later on?"
+    description="The page is already structured to expand into technical controls, policy references, and deeper review material without reworking the design system."
+    primaryHref="/contact"
+    primaryLabel="Plan the trust center"
+    secondaryHref="/blog"
+    secondaryLabel="See the insight hub"
+  />
+</MainLayout>

@@ -1,0 +1,19 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  centered?: boolean;
+}
+
+const { eyebrow, title, description, centered = false } = Astro.props;
+---
+
+<div class:list={[
+  'flex flex-col gap-4',
+  centered ? 'mx-auto max-w-3xl items-center text-center' : 'max-w-3xl items-start text-left'
+]}>
+  {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  <h2 class="section-title">{title}</h2>
+  {description && <p class="section-copy">{description}</p>}
+</div>

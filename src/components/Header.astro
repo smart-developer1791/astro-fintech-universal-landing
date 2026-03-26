@@ -1,0 +1,83 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+const normalize = (value: string) => value.replace(/\/$/, '') || '/';
+const isActive = (href: string) => {
+  const cleanHref = normalize(href);
+  const cleanPath = normalize(currentPath);
+
+  return cleanHref === '/'
+    ? cleanPath === '/'
+    : cleanPath === cleanHref || cleanPath.startsWith(`${cleanHref}/`);
+};
+---
+
+<header class="sticky top-0 z-50">
+  <div class="shell pt-4 sm:pt-5">
+    <div class="header-frame">
+      <div class="flex items-center justify-between gap-3">
+        <a href="/" class="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-100">
+          <span class="flex h-11 w-11 items-center justify-center rounded-full border border-cyan-300/25 bg-cyan-300/10 font-display text-base tracking-normal text-cyan-100">
+            F
+          </span>
+          <span class="hidden sm:inline">Finvera</span>
+        </a>
+
+        <nav class="hidden items-center gap-2 lg:flex">
+          {site.nav.map((item) => (
+            <a
+              href={item.href}
+              class:list={['nav-link', isActive(item.href) && 'nav-link-active']}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <div class="hidden items-center gap-2 md:flex">
+          <a href="/security" class="button-secondary">Trust center</a>
+          <a href={site.primaryCta.href} class="button-primary">{site.primaryCta.label}</a>
+        </div>
+
+        <details class="relative md:hidden">
+          <summary class="button-secondary px-4 py-2.5">Menu</summary>
+          <div class="absolute right-0 top-[calc(100%+0.75rem)] w-[min(20rem,calc(100vw-2rem))] rounded-[28px] border border-white/10 bg-slate-950/95 p-4 shadow-2xl backdrop-blur-2xl">
+            <nav class="grid gap-2">
+              {site.nav.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={[
+                    'rounded-2xl px-4 py-3 text-sm font-medium text-slate-200',
+                    isActive(item.href) ? 'bg-white/10 text-white' : 'bg-white/3 hover:bg-white/8'
+                  ]}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+            <div class="mt-4 grid gap-2">
+              <a href="/security" class="button-secondary w-full">Trust center</a>
+              <a href={site.primaryCta.href} class="button-primary w-full">{site.primaryCta.label}</a>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <nav class="mt-4 hidden items-center gap-2 overflow-x-auto pb-1 lg:hidden md:flex">
+        {site.nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={['nav-link whitespace-nowrap', isActive(item.href) && 'nav-link-active']}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </div>
+</header>

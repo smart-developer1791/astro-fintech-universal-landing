@@ -1,0 +1,278 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+  --color-midnight: #07111f;
+  --color-night: #0b1528;
+  --color-panel: #101d35;
+  --color-panel-strong: #142745;
+  --color-muted: #9db1d1;
+  --color-mist: #ebf3ff;
+  --color-signal: #67e8f9;
+  --color-support: #5eead4;
+}
+
+:root {
+  color-scheme: dark;
+  --grid-line: rgba(148, 163, 184, 0.12);
+  --panel-shadow: 0 28px 80px rgba(3, 10, 22, 0.48);
+  --panel-shadow-soft: 0 18px 50px rgba(3, 10, 22, 0.34);
+  --button-shadow: 0 16px 44px rgba(103, 232, 249, 0.18);
+}
+
+@layer base {
+  html {
+    min-height: 100%;
+    background: var(--color-midnight);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100%;
+    overflow-x: clip;
+    position: relative;
+    font-family: var(--font-body);
+    color: white;
+    background:
+      radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 26%),
+      radial-gradient(circle at 88% 14%, rgba(45, 212, 191, 0.14), transparent 22%),
+      linear-gradient(180deg, #091224 0%, #07111f 36%, #050c17 100%);
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, transparent 0, transparent calc(100% - 1px), var(--grid-line) calc(100% - 1px)),
+      linear-gradient(to bottom, transparent 0, transparent calc(100% - 1px), var(--grid-line) calc(100% - 1px));
+    background-size: 108px 108px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 88%);
+    pointer-events: none;
+    z-index: -2;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: auto auto 18% -10rem;
+    width: 28rem;
+    height: 28rem;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(103, 232, 249, 0.12), transparent 66%);
+    filter: blur(20px);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  main {
+    position: relative;
+  }
+
+  ::selection {
+    background: rgba(103, 232, 249, 0.24);
+    color: white;
+  }
+
+  a,
+  button {
+    transition:
+      color 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      opacity 180ms ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  summary {
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-[1380px] px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-space {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .panel {
+    @apply border border-white/10 bg-white/5 backdrop-blur-xl;
+    box-shadow: var(--panel-shadow);
+  }
+
+  .header-frame {
+    @apply rounded-[28px] border border-white/10 bg-slate-950/55 px-4 py-3 backdrop-blur-2xl sm:px-5;
+    box-shadow: var(--panel-shadow-soft);
+  }
+
+  .hero-frame {
+    @apply relative overflow-hidden rounded-[30px] border border-white/10 bg-white/6 px-5 py-8 backdrop-blur-2xl sm:px-7 sm:py-9 lg:px-9 lg:py-10;
+    box-shadow: var(--panel-shadow);
+    min-width: 0;
+  }
+
+  .content-card {
+    @apply rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur-xl sm:p-6;
+    box-shadow: var(--panel-shadow-soft);
+    min-width: 0;
+  }
+
+  .soft-card {
+    @apply rounded-[24px] border border-white/8 bg-slate-950/35 p-5;
+    min-width: 0;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-cyan-100;
+  }
+
+  .button-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950;
+    box-shadow: var(--button-shadow);
+  }
+
+  .button-primary:hover {
+    @apply bg-cyan-200;
+    transform: translateY(-1px);
+  }
+
+  .button-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-white/12 bg-white/5 px-5 py-3 text-sm font-semibold text-white;
+  }
+
+  .button-secondary:hover {
+    @apply border-white/25 bg-white/10;
+    transform: translateY(-1px);
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-white/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-200;
+  }
+
+  .metric-value {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 4vw, 3.2rem);
+    line-height: 0.95;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 3.5vw, 4.1rem);
+    line-height: 0.98;
+    color: white;
+  }
+
+  .section-copy {
+    max-width: 46rem;
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    line-height: 1.8;
+    color: rgb(203 213 225 / 0.88);
+  }
+
+  .page-title {
+    font-size: clamp(2.25rem, 4.4vw, 5rem);
+    line-height: 0.98;
+    color: white;
+  }
+
+  .page-copy {
+    max-width: 42rem;
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    line-height: 1.85;
+    color: rgb(203 213 225 / 0.9);
+  }
+
+  .surface-grid {
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 60%),
+      radial-gradient(circle at 88% 16%, rgba(103, 232, 249, 0.16), transparent 24%),
+      linear-gradient(180deg, rgba(16, 28, 49, 0.94), rgba(8, 17, 31, 0.94));
+  }
+
+  .mesh-card {
+    background:
+      radial-gradient(circle at top right, rgba(103, 232, 249, 0.18), transparent 28%),
+      radial-gradient(circle at bottom left, rgba(45, 212, 191, 0.1), transparent 22%),
+      linear-gradient(180deg, rgba(16, 28, 49, 0.96), rgba(8, 17, 31, 0.96));
+  }
+
+  .nav-link {
+    @apply rounded-full px-4 py-2 text-sm text-slate-300;
+  }
+
+  .nav-link:hover {
+    @apply bg-white/8 text-white;
+  }
+
+  .nav-link-active {
+    @apply bg-white/12 text-white;
+  }
+}
+
+@keyframes float-card {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.floating-card {
+  animation: float-card 14s ease-in-out infinite;
+}
+
+.fade-rise {
+  animation: fade-rise 720ms ease both;
+}
+
+.fade-rise[data-delay='1'] {
+  animation-delay: 110ms;
+}
+
+.fade-rise[data-delay='2'] {
+  animation-delay: 220ms;
+}
+
+.fade-rise[data-delay='3'] {
+  animation-delay: 330ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-card,
+  .fade-rise {
+    animation: none;
+  }
+}
