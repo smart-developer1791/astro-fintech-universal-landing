@@ -8,10 +8,12 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.2.2-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Sitemap](https://img.shields.io/badge/SEO-Sitemap_Ready-67E8F9?style=for-the-badge)](https://docs.astro.build/en/guides/integrations-guide/sitemap/)
-[![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://netlify.com/)
+[![Netlify](https://img.shields.io/badge/Netlify-Deploy-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://netlify.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 *A polished static-first landing system for a fictional fintech brand, built to demonstrate senior-level information architecture, premium visual direction, and route-level SEO foundations from day one.*
+
+*Originally scoped as a landing concept, Finvera evolved into a compact multi-page SEO-first marketing site while keeping the initial naming for continuity.*
 
 </div>
 
